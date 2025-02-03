@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    public GameObject pauseMenuPanel; // Pause menu UI
+    public GameObject pauseMenuPanel;   // Pause menu UI
 
     private bool isPaused = false;
 
@@ -28,16 +28,18 @@ public class MenuManager : MonoBehaviour
 
         if (isPaused)
         {
-            // Pause the game time
+            // Pause the game
             Time.timeScale = 0;
             pauseMenuPanel.SetActive(true);
+            AudioManager.instance.PauseAudio();
             // timerScript.PauseTimer();
         }
         else
         {
-            // Resume the game time
+            // Resume the game
             Time.timeScale = 1;
             pauseMenuPanel.SetActive(false);
+            AudioManager.instance.PauseAudio();
             // timerScript.ResumeTimer();
         }
     }
