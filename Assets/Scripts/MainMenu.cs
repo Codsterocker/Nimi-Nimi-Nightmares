@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -11,30 +12,51 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenuFirstSelected;
 
     private GameObject firstSelectedGameObject;
+    private GameObject lastSelectedGameObject;
 
     private void Start()
     {
         ShowPressToPlayPanel();
     }
 
-    void Update()
+    private void Update()
     {
-        // Ensure that the controller is being used
-        if (Input.GetJoystickNames().Length > 0 || Input.GetKey(KeyCode.JoystickButton0))
+        HandleMenuNavigation();
+    }
+
+    // if the UI is clicked off, set the game object back to the previous option
+    private void HandleMenuNavigation()
+    {
+        //if (EventSystem.current.currentSelectedGameObject == null)
+        if (InputSystem.actions.FindAction("Move").WasPressedThisFrame())
         {
-            // Force EventSystem to focus on the controller-selected object
-            if (EventSystem.current.currentSelectedGameObject == null)
-            {
-                EventSystem.current.SetSelectedGameObject(firstSelectedGameObject);
-            }
+            EventSystem.current.SetSelectedGameObject(lastSelectedGameObject);
+        }
+        else
+        {
+            lastSelectedGameObject = EventSystem.current.currentSelectedGameObject;
         }
     }
 
+    private void ShowMouseCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void HideMouseCursor()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+        
+    // Switch the scene to the Game scene
     public void PlayGame()
     {
         SceneManager.LoadSceneAsync("Game");
     }
 
+    // Close the application
     public void QuitGame()
     {
         Application.Quit();
@@ -44,11 +66,13 @@ public class MainMenu : MonoBehaviour
         #endif
     }
 
+    // Show the settings panel within the main menu
     public void ShowSettingsPanel()
     {
         Debug.Log("Show Settings Hit");
     }
 
+    // Show the Press To Play panel before the main menu
     public void ShowPressToPlayPanel()
     {
         // Set the active panel
@@ -60,6 +84,7 @@ public class MainMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstSelectedGameObject);
     }
 
+    // Show the Main Menu panel
     public void ShowMainMenu()
     {
         // Set the active panel
