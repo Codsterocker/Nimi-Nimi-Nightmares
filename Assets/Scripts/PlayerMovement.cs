@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float blowStrength = 10f;    // How powerful the nightmares will be blown back
     public float actionTimer = 1f;      // How often the player can suck/blow
     public Camera arenaCamera;          // The main camera, so movement will be based on its position if it moves
-    public int playerScore = 0;         // The players total amount of captured nightmares
+    public MatchData matchData;         // Used to send players score to the match data
 
     private Rigidbody rigidBody;                        // Reference to the player's Rigidbody 
     private Vector3 forceDirection = Vector3.zero;      // The force that will be applied to the rb
@@ -83,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (collectible.CompareTag("Collectible"))
                 {
-                    playerScore++;
+                    matchData.AddScore();
                     Destroy(collectible.gameObject);
                 }
             }
