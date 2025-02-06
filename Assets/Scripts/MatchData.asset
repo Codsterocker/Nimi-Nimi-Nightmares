@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822a0e7832319f1408ebb1bdbe725b1e, type: 3}
   m_Name: MatchData
   m_EditorClassIdentifier: 
-  roundDuration: 10
+  roundDuration: 60
