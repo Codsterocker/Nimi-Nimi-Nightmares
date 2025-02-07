@@ -6,8 +6,7 @@ using UnityEngine;
 public class MatchData : ScriptableSingleton<MatchData>
 {
     private float roundDuration = 60f;  // seconds per round
-    private int numPlayers = 1;         // number of players to spawn / draw UI
-    private int playerScore = 0;        // player's score
+    private int numPlayers = 4;         // number of players to spawn / draw UI
 
     public void SetRoundDuration(float roundDuration)
     {
@@ -27,20 +26,5 @@ public class MatchData : ScriptableSingleton<MatchData>
     public int GetNumPlayers()
     {
         return numPlayers;
-    }
-
-    public void AddScore()
-    {
-        playerScore++;
-    }
-
-    public int GetScore()
-    {
-        return playerScore;
-    }
-
-    public void ResetScore()
-    {
-        playerScore = 0;
     }
 }

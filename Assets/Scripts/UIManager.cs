@@ -3,29 +3,34 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     public TextMeshProUGUI timerText;       // text UI to modify
     public TextMeshProUGUI timesUpText;     // text UI to display when timer hits 0
+    private float remainingSeconds;         // seconds left on the timer
 
-    public TextMeshProUGUI playerScoreText; // text UI to display player's score
-
-    public GameObject[] players = new GameObject[4];
     public GameObject[] playersUI = new GameObject[4];
-    public int[] playersScore = new int[4];
     public TextMeshProUGUI[] playersScoreText = new TextMeshProUGUI[4];
 
-    private float remainingSeconds;         // seconds left on the timer
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     void Start()
     {
         remainingSeconds = MatchData.instance.GetRoundDuration();
-        MatchData.instance.ResetScore();
+        PlayerManager.instance.ResetAllScores();
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleTimer();
-        HandlePlayerScore();
+        HandlePlayerScores();
     }
 
     private void HandleTimer()
@@ -47,9 +52,12 @@ public class UIManager : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    private void HandlePlayerScore()
+    private void HandlePlayerScores()
     {
-        playerScoreText.text = string.Format("P1 Score: {0:0}", MatchData.instance.GetScore());
+        for (int i = 0; i < MatchData.instance.GetNumPlayers(); i++)
+        {
+            playersScoreText[i].text = string.Format("{0:0}", PlayerManager.instance.players[i].GetScore());
+        }
     }
 
 
