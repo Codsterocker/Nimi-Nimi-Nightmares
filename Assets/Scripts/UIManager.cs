@@ -1,23 +1,24 @@
 using UnityEngine;
 using TMPro;
-using System;
 
 public class UIManager : MonoBehaviour
 {
-    public MatchData matchData;             // obtain data of match, will be used for seconds on timer
-
     public TextMeshProUGUI timerText;       // text UI to modify
     public TextMeshProUGUI timesUpText;     // text UI to display when timer hits 0
 
-    public GameObject player;               // A player who's score will be obtained
     public TextMeshProUGUI playerScoreText; // text UI to display player's score
-    
+
+    public GameObject[] players = new GameObject[4];
+    public GameObject[] playersUI = new GameObject[4];
+    public int[] playersScore = new int[4];
+    public TextMeshProUGUI[] playersScoreText = new TextMeshProUGUI[4];
+
     private float remainingSeconds;         // seconds left on the timer
 
     void Start()
     {
-        remainingSeconds = matchData.roundDuration;
-        matchData.ResetScore();
+        remainingSeconds = MatchData.instance.GetRoundDuration();
+        MatchData.instance.ResetScore();
     }
 
     // Update is called once per frame
@@ -48,7 +49,7 @@ public class UIManager : MonoBehaviour
 
     private void HandlePlayerScore()
     {
-        playerScoreText.text = string.Format("P1 Score: {0:0}", matchData.GetScore());
+        playerScoreText.text = string.Format("P1 Score: {0:0}", MatchData.instance.GetScore());
     }
 
 

@@ -5,7 +5,6 @@ public class NightmareSpawner : MonoBehaviour
     public GameObject objectToSpawn;    // The GameObject to spawn
     public GameObject objectParent;     // The parent the spawn objects will be created under
     public GameObject arena;            // The arena that the objects will be spawn in
-    public MatchData matchData;         // Data of match, used to find duration of round
 
     public float waitTimeLow = 1f;      // The minimum wait time (seconds)
     public float waitTimeHigh = 5f;     // The maximum wait time (seconds)
@@ -19,7 +18,7 @@ public class NightmareSpawner : MonoBehaviour
     private void Start()
     {
         // Set items to spawn for duration of round
-        timeUntilStop = matchData.roundDuration;
+        timeUntilStop = MatchData.instance.GetRoundDuration();
 
         // Calculate the radius based on the arena diameter
         radius = arena.transform.localScale.x / 2f;

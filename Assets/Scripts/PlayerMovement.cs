@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (collectible.CompareTag("Collectible"))
                 {
-                    matchData.AddScore();
+                    MatchData.instance.AddScore();
                     Destroy(collectible.gameObject);
                 }
             }
